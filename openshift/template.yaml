@@ -29,7 +29,7 @@ parameters:
   description: Namespace that the proxy runs in
   value: tangerine
 - name: COOKIE_SECRET
-  required: your_cookie_secret
+  value: your_cookie_secret
 
 objects:
 - apiVersion: v1

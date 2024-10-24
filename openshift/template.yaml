@@ -30,6 +30,14 @@ parameters:
   value: tangerine
 - name: COOKIE_SECRET
   value: your_cookie_secret
+- name: MEMORY_LIMIT
+  value: 128Mi
+- name: MEMORY_REQUEST
+  value: 50Mi
+- name: CPU_REQUEST
+  value: 200m
+- name: CPU_LIMIT
+  value: 450m
 
 objects:
 - apiVersion: v1
@@ -87,6 +95,13 @@ objects:
         containers:
         - name: tangerine-proxy
           image: ${IMAGE}:${IMAGE_TAG}
+          resources:
+            request:
+              cpu: ${CPU_REQUEST}
+              memory: ${MEMORY_REQUEST}
+            limits:
+              cpu: ${CPU_LIMIT}
+              memory: ${MEMORY_LIMIT}
           ports:
           - containerPort: 8000
           env:

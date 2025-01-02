@@ -114,6 +114,13 @@ objects:
           - name: FRONTEND_PORT
             value: ${FRONTEND_PORT}
         - name: oauth-proxy
+          resources:
+            request:
+              cpu: ${CPU_REQUEST}
+              memory: ${MEMORY_REQUEST}
+            limits:
+              cpu: ${CPU_LIMIT}
+              memory: ${MEMORY_LIMIT}
           args:
             - --provider=openshift
             - --https-address=:8888

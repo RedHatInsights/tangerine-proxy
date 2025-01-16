@@ -9,7 +9,7 @@ parameters:
   value: tangerine-backend
 - name: BACKEND_PORT
   description: The port of the backend service
-  value: "5000"
+  value: "8000"
 - name: FRONTEND_SERVICE
   description: The name of the frontend service
   value: tangerine-frontend

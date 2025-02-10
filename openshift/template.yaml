@@ -77,11 +77,11 @@ objects:
     replicas: 1
     selector:
       matchLabels:
-        app: tangerine-proxy
+        app.kubernetes.io/name: tangerine-proxy
     template:
       metadata:
         labels:
-          app: tangerine-proxy
+          app.kubernetes.io/name: tangerine-proxy
       spec:
         volumes:
           - name: secret-tangerine-proxy-tls
@@ -158,7 +158,7 @@ objects:
       name: tangerine-proxy
   spec:
     selector:
-      app: tangerine-proxy
+      app.kubernetes.io/name: tangerine-proxy
     ports:
     - name: oauth-proxy
       protocol: TCP

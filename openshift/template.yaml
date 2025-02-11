@@ -73,6 +73,8 @@ objects:
   kind: Deployment
   metadata:
     name: tangerine-proxy
+    labels:
+      app.kubernetes.io/name: tangerine-proxy
   spec:
     replicas: 1
     selector:
@@ -155,7 +157,7 @@ objects:
     annotations:
       service.alpha.openshift.io/serving-cert-secret-name: tangerine-proxy-tls
     labels:
-      name: tangerine-proxy
+      app.kubernetes.io/name: tangerine-proxy
   spec:
     selector:
       app.kubernetes.io/name: tangerine-proxy
@@ -169,6 +171,8 @@ objects:
   kind: Route
   metadata:
     name: tangerine-proxy
+    labels:
+      app.kubernetes.io/name: tangerine-proxy
   spec:
     to:
       kind: Service

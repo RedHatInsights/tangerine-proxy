@@ -76,6 +76,12 @@ objects:
     labels:
       app.kubernetes.io/name: tangerine-proxy
   spec:
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 33%
+    minReadySeconds: 5
     replicas: 1
     selector:
       matchLabels:

@@ -104,7 +104,7 @@ objects:
         - name: tangerine-proxy
           image: ${IMAGE}:${IMAGE_TAG}
           resources:
-            request:
+            requests:
               cpu: ${CPU_REQUEST}
               memory: ${MEMORY_REQUEST}
             limits:
@@ -123,7 +123,7 @@ objects:
             value: ${FRONTEND_PORT}
         - name: oauth-proxy
           resources:
-            request:
+            requests:
               cpu: ${CPU_REQUEST}
               memory: ${MEMORY_REQUEST}
             limits:

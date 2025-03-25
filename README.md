@@ -17,5 +17,4 @@ oc process \
     -p COOKIE_SECRET=$(python -c 'import os,base64; print(base64.b64encode(os.urandom(16)).decode())') \
     -p HOSTNAME=<your public Route hostname> \
     -f openshift/template.yaml | oc apply -f - -n $NAMESPACE
-
 ```

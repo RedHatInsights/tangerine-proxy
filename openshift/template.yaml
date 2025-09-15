@@ -38,6 +38,10 @@ parameters:
   value: 200m
 - name: CPU_LIMIT
   value: 450m
+- name: OAUTH_PROXY_IMAGE
+  value: quay.io/openshift/origin-oauth-proxy:4.14
+- name: OAUTH_PROXY_IMAGE_TAG
+  value: "4.14"
 
 objects:
 - apiVersion: v1
@@ -143,7 +147,7 @@ objects:
             - --skip-auth-regex=^/metrics
             - --pass-user-headers=true
             - --openshift-delegate-urls={"/":{"resource":"services","name":"tangerine-proxy","verb":"get","namespace":"${NAMESPACE}"}}
-          image: quay.io/openshift/origin-oauth-proxy:4.14
+          image: ${OAUTH_PROXY_IMAGE}:${OAUTH_PROXY_IMAGE_TAG}
           imagePullPolicy: IfNotPresent
           ports:
             - name: oauth-proxy

@@ -39,7 +39,7 @@ parameters:
 - name: CPU_LIMIT
   value: 450m
 - name: OAUTH_PROXY_IMAGE
-  value: quay.io/openshift/origin-oauth-proxy:4.14
+  value: quay.io/openshift/origin-oauth-proxy
 - name: OAUTH_PROXY_IMAGE_TAG
   value: "4.14"
 

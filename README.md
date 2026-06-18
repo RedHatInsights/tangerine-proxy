@@ -1,16 +1,25 @@
-# tangerine-proxy
+# Tangerine Proxy
 
-An OAuth and TLS proxy for [tangerine-frontend](https://github.com/RedHatInsights/tangerine-frontend/) and [tangerine-backend](https://github.com/RedHatInsights/tangerine-backend/)
+An OAuth and TLS proxy for [Tangerine Frontend][tangerine-frontend] and
+[Tangerine Backend][tangerine-backend]. It provides a Caddy reverse proxy that routes requests
+to the frontend and backend pods, sitting behind an OpenShift OAuth Proxy for authentication.
 
-## About
+## How It Works
 
-This provides 2 simple proxies that work together to allow Tangerine to run securely on OpenShift and be exposed to the internet. The first proxy is [OpenShift OAuth Proxy](https://github.com/openshift/oauth-proxy) which handles authentication and the OAuth flow. After authentication it routes requests to its upstream: the tangerine-proxy, which is a Caddy reverse proxy running as a seperate container in the same pod. The tangerine-proxy routes requests to the frontend and backend pods. This ensures that both the frontend and backend are behind OAuth, without either app needing to implement the OAuth flow themselves.
+Two proxies work together:
 
-Inspired by the [firelink-proxy](https://github.com/RedHatInsights/firelink-proxy)
+1. **OpenShift OAuth Proxy** handles authentication and the OAuth flow
+2. **Tangerine Proxy (Caddy)** runs as a reverse proxy in the same pod, routing requests to the
+   frontend and backend services
+
+This ensures both the frontend and backend are behind OAuth without either application needing to
+implement the OAuth flow.
+
+Inspired by [firelink-proxy][firelink-proxy].
 
 ## Deploying
 
-```
+```sh
 NAMESPACE=<namespace>
 
 oc process \
@@ -18,3 +27,34 @@ oc process \
     -p HOSTNAME=<your public Route hostname> \
     -f openshift/template.yaml | oc apply -f - -n $NAMESPACE
 ```
+
+## Configuration
+
+The Caddy reverse proxy is configured via the `Caddyfile`:
+
+- `/api/*` requests are forwarded to `BACKEND_SERVICE:BACKEND_PORT`
+- All other requests are forwarded to `FRONTEND_SERVICE:FRONTEND_PORT`
+- TLS is disabled (`auto_https off`) since the OAuth Proxy handles TLS termination
+
+Environment variables used at runtime:
+
+| Variable             | Description                          |
+| -------------------- | ------------------------------------ |
+| `BACKEND_SERVICE`    | Hostname of the backend service      |
+| `BACKEND_PORT`       | Port of the backend service          |
+| `FRONTEND_SERVICE`   | Hostname of the frontend service     |
+| `FRONTEND_PORT`      | Port of the frontend service         |
+
+## Prerequisites
+
+- OpenShift cluster
+- `oc` CLI authenticated
+- Tangerine Frontend and Backend services deployed in the same namespace
+
+## License
+
+Apache License 2.0
+
+[tangerine-frontend]: https://github.com/RedHatInsights/tangerine-frontend/
+[tangerine-backend]: https://github.com/RedHatInsights/tangerine-backend/
+[firelink-proxy]: https://github.com/RedHatInsights/firelink-proxy

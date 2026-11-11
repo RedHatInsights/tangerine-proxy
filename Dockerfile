@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/hi/caddy:2.11.7@sha256:443cd9a7d6a8ca9db519903582810d2b633646f3a6a25029530d0a5c0135dcb5
+FROM registry.access.redhat.com/hi/caddy:2.11.7@sha256:1804c582fef49d8425d23343294591e506804c2b7b6965a2a2428f80501312e3
 
 ENV CADDY_TLS_MODE="http_port 8000"
 
